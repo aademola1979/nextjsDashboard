@@ -10,6 +10,7 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as no_store } from 'next/cache';
+const bcrypt = require('bcrypt');
 
 export async function fetchRevenue() {
   no_store()
@@ -219,8 +220,7 @@ export async function fetchFilteredCustomers(query: string) {
 		  customers.name ILIKE ${`%${query}%`} OR
         customers.email ILIKE ${`%${query}%`}
 		GROUP BY customers.id, customers.name, customers.email, customers.image_url
-		ORDER BY customers.name ASC
-	  `;
+		ORDER BY customers.name ASC` ;
 
     const customers = data.rows.map((customer) => ({
       ...customer,
@@ -246,3 +246,15 @@ export async function getUser(email: string) {
     throw new Error('Failed to fetch user.');
   }
 }
+  
+
+
+/*My addition*/
+//Adding new user into the database
+export async function addUser(user:User){
+  const hashedPassword = await bcrypt.hash(user.password, 10);
+    return sql`
+    INSERT INTO users (id, name, email, password)
+    VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+    ON CONFLICT (id) DO NOTHING;
+  `}

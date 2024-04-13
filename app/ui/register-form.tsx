@@ -29,9 +29,9 @@ export default function RegisterForm() {
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="full-name"
+                id="fullName"
                 type="text"
-                name="full-name"
+                name="fullName"
                 placeholder="Enter your full name."
                 required
               />
@@ -89,9 +89,9 @@ export default function RegisterForm() {
             <div className="relative">
               <input
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="password"
+                id="confirmPassword"
                 type="password"
-                name="password"
+                name="confirmPassword"
                 placeholder="Enter password"
                 required
                 minLength={6}
